@@ -1,4 +1,6 @@
-FROM docker.io/eyalamirmusic/juce_dev_machine:latest AS build
+FROM docker.io/eyalamirmusic/juce_dev_machine:latest AS base
+
+FROM base as build
 
 COPY . /v
 WORKDIR /v
@@ -8,7 +10,7 @@ RUN cmake -G Ninja -B build \
 
 RUN cmake --build build --config Release
 
-FROM base AS runprogram
+FROM ubuntu:latest AS runprogram
 
 WORKDIR /r
 
