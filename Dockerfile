@@ -4,6 +4,8 @@ FROM base AS juce_dev_machine
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    gcc \
+    g++ \
     git \
     clang-11 \
     cmake \
@@ -26,8 +28,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     libglu1-mesa-dev  \
     mesa-common-dev
 
-ENV CC="/usr/bin/clang-11" \
-    CXX="/usr/bin/clang++-11"
+#Make sure clang is the default compiler:
+RUN DEBIAN_FRONTEND=noninteractive \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/clang-11 100 \
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-11 100
 
 FROM juce_dev_machine AS build
 
@@ -35,9 +41,8 @@ COPY . /v
 WORKDIR /v
 
 RUN cmake -G Ninja -B build \
-    -DCMAKE_BUILD_TYPE=Release  \
-    -DCMAKE_C_COMPILER=clang-11 \
-    -DCMAKE_CXX_COMPILER=clang++-11
+    -DCMAKE_BUILD_TYPE=Release
+
 RUN cmake --build build --config Release
 
 FROM base AS runprogram
