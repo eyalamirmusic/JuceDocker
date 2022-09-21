@@ -3,7 +3,7 @@ project(JUCEDocker)
 
 include(CMake/CPM.cmake)
 
-option(BUILD_JUCE_PROTOTYPE_EXAMPES "Build JUCE prototype examples" OFF)
+option(BUILD_JUCE_PROTOTYPE_EXAMPLES "Build JUCE prototype examples" OFF)
 
 CPMAddPackage(
         NAME JUCE_Config
