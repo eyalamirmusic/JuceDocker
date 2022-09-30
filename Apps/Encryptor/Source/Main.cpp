@@ -23,7 +23,7 @@ inline bool isValidBlock(MemoryBlock& block)
 
 struct ReqInfo
 {
-    ReqInfo(const Request& req)
+    explicit ReqInfo(const Request& req)
     {
         key = RSAKey(req.get_header_value("key"));
         text = req.get_header_value("text");
@@ -51,7 +51,7 @@ struct ReqInfo
         return {};
     }
 
-    inline std::string decode()
+    inline std::string decode() const
     {
         try
         {
@@ -113,10 +113,11 @@ int main()
                 {
                     auto pair = generatePair(numBits);
 
-                    result =
-                        "Private Key:\n" + pair.privateKey.toString().toStdString() + "\n";
+                    result = "Private Key:\n"
+                             + pair.privateKey.toString().toStdString() + "\n";
 
-                    result += "Public Key: \n" + pair.publicKey.toString().toStdString();
+                    result +=
+                        "Public Key: \n" + pair.publicKey.toString().toStdString();
                 }
 
                 res.set_content(result, "text/plain");
