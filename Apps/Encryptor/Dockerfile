@@ -33,11 +33,6 @@ WORKDIR /v
 
 FROM copy AS build
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libssl-dev \
-    libssh-dev
-
 RUN cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 RUN cmake --build build --config Release --target Encryptor
 
