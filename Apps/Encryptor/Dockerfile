@@ -33,12 +33,12 @@ WORKDIR /v
 
 FROM copy AS build
 
-RUN cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-RUN cmake --build build --config Release --target Encryptor
+RUN cmake -B newBuild -G Ninja -DCMAKE_BUILD_TYPE=Release
+RUN cmake --build newBuild --config Release --target Encryptor
 
 FROM base AS run
 
 WORKDIR /r
-COPY --from=build v/build/Apps/Encryptor/Encryptor_artefacts/Release/Encryptor /r
+COPY --from=build v/newBuild/Apps/Encryptor/Encryptor_artefacts/Release/Encryptor /r
 
 ENTRYPOINT ["./Encryptor"]
