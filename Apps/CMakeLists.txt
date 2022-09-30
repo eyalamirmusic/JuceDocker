@@ -1,1 +1,2 @@
 add_subdirectory(ConsoleAppTemplate)
+add_subdirectory(Encryptor)
