@@ -39,7 +39,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     libssh-dev
 
 RUN cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-RUN cmake --build build --config Release --target CopyProtectionServer
+RUN cmake --build build --config Release --target Encryptor
 
 FROM base AS run
 
